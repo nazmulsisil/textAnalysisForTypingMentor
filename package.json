@@ -1,0 +1,10 @@
+{
+  "name": "frequent_english",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "empty-folder": "^2.0.2",
+    "uuid": "^3.3.2"
+  }
+}
