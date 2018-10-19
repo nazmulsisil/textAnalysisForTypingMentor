@@ -1,6 +1,6 @@
 const fs = require('fs');
 
-exports.getMostFrequentSyllables = function(jsonPath, topHowMany) {
+exports.getMostFrequentSyllables = function(jsonPath, topHowMany, callBack) {
   let jsonObj;
   const mostFrequentSyllablesArr = [];
 
@@ -21,6 +21,8 @@ exports.getMostFrequentSyllables = function(jsonPath, topHowMany) {
       return Object.values(b)[0] - Object.values(a)[0];
     });
 
-    console.log(mostFrequentSyllablesArr.slice(0, topHowMany));
+    callBack(mostFrequentSyllablesArr.slice(0, topHowMany));
+
+    // console.log(mostFrequentSyllablesArr.slice(0, topHowMany));
   });
 };
