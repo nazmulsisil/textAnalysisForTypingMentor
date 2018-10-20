@@ -17,3 +17,33 @@ exports.getFileNamesArr = function(folderPath) {
 
   return myArr;
 };
+
+exports.capsRatio = function(str) {
+  let numOfCaps = 0;
+  let numOfChars = 0;
+
+  for (let i = 0; i < str.length; i++) {
+    const char = str[i];
+    numOfChars++;
+    if (/\w/g.test(char) && char === char.toUpperCase()) {
+      numOfCaps++;
+    }
+  }
+
+  return numOfCaps / numOfChars;
+};
+
+exports.numberRatioInText = function(str) {
+  let numOfNumberChars = 0;
+  let numOfChars = 0;
+
+  for (let i = 0; i < str.length; i++) {
+    const char = str[i];
+    numOfChars++;
+    if (/\w/g.test(char) && char === char.toUpperCase()) {
+      numOfNumberChars++;
+    }
+  }
+
+  return numOfNumberChars / numOfChars;
+};

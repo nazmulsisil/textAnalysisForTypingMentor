@@ -13,21 +13,26 @@
 
   <label for="word-length">Word Length: </label>
   <input type="number" class="word-length" id="word-length" value="5">
-  <br><br>
-
+  <br>
   <label for="how-many">Top how many: </label>
   <input type="number" class="how-many" id="how-many" value="5">
-  <br><br>
-
-  <button class="json-btn">Console JSON for me.</button>
-  <br><br>
-
+  <br>
+  <button class="json-btn">Get words</button>
   <div class='json-result'></div>
   <br><br>
 
+  <label for="para-min">Paragraph min length: </label>
+  <input type="number" class="para-min" id="para-min" value="200">
+  <br>
+  <label for="para-max">Paragraph max length: </label>
+  <input type="number" class="para-max" id="para-max" value="300">
+  <br>
+  <button class="get-para-btn">Generate Paragraph</button>
+  <p class="para-result"></p>
   <br><br>
 
   <script src="scripts/front.js"></script>
+
 </body>
 
 </html>

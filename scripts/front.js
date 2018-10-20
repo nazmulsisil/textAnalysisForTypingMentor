@@ -3,7 +3,14 @@ const wordLength = document.querySelector('.word-length');
 const howMany = document.querySelector('.how-many');
 const jsonResultDiv = document.querySelector('.json-result');
 
+const getParaBtn = document.querySelector('.get-para-btn');
+const paraMin = document.querySelector('.para-min');
+const paraMax = document.querySelector('.para-max');
+const paraResult = document.querySelector('.para-result');
+
 jsonBtn.addEventListener('click', () => {
+  jsonResultDiv.innerHTML = `<img style="height: 20px; margin: 10px;" className="loader__image" src="/images/loader.gif" />`;
+
   fetch(`/getWords?wordLength=${wordLength.value}&howMany=${howMany.value}`)
     .then(function(response) {
       return response.text();
@@ -34,11 +41,27 @@ jsonBtn.addEventListener('click', () => {
     });
 });
 
+getParaBtn.addEventListener('click', () => {
+  paraResult.innerHTML = `<img style="height: 20px; margin: 10px;" className="loader__image" src="/images/loader.gif" />`;
+
+  fetch(
+    `/getParagraph?paraMinLength=${paraMin.value}&paraMaxLength=${
+      paraMax.value
+    }`
+  )
+    .then(function(response) {
+      return response.text();
+    })
+    .then(function(result) {
+      paraResult.textContent = result;
+    });
+});
+
 //
 //
 //
 //
-//////////////////
+//////// Helper function //////////
 //
 //
 //
