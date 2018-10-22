@@ -50,11 +50,17 @@ exports.getParagraph = function(
       isDoubleChecking++;
     }
 
-    if (isDoubleChecking > 1 && paragraph.length < minTextLength) {
+    if (
+      isDoubleChecking > 1 &&
+      (paragraph.length < minTextLength || paragraph.length > maxTextLength)
+    ) {
       mainCallback(
         `sorry! Data could not be found in ${(new Date() - startTime) / 1000}s!`
       );
-    } else if (paragraph.length < minTextLength) {
+    } else if (
+      paragraph.length < minTextLength ||
+      paragraph.length > maxTextLength
+    ) {
       // console.log('going to call ' + (invocationCounter + 1) + 'th file');
       generateParagraph(
         randomizedFilePathArr[invocationCounter],
@@ -155,7 +161,7 @@ exports.getParagraph = function(
               callbackOfGenerateParagraph(paragraph);
 
               if (isDoubleChecking > 0) {
-                console.log('found on double check');
+                console.log('Attempting double check!');
               }
 
               paragraphFound = true;

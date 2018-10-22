@@ -29,7 +29,7 @@ app.get('/getWords', (req, res) => {
       '..',
       'JSON',
       'words',
-      `words_with_${wordLength}_letters.json`
+      `words_with_${wordLength - 1}_letters.json`
     ),
     howMany,
     dataOnCompletions => {

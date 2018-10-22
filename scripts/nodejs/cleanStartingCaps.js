@@ -4,7 +4,14 @@ const getFileNamesArr = require('./helper').getFileNamesArr;
 const capsRatio = require('./helper').capsRatio;
 
 let fileNameArr = getFileNamesArr(
-  path.join(__dirname, '..', '..', 'text_finalized', 'jj', 'torrent_cleanedUp')
+  path.join(
+    __dirname,
+    '..',
+    '..',
+    'text_finalized',
+    'US_archive',
+    'US_archive_cleanedup_required'
+  )
 );
 
 fileNameArr.forEach(filename => {
@@ -13,8 +20,8 @@ fileNameArr.forEach(filename => {
     '..',
     '..',
     'text_finalized',
-    'jj',
-    'torrent_cleanedUp',
+    'US_archive',
+    'US_archive_cleanedup_required',
     filename
   );
 
@@ -23,8 +30,8 @@ fileNameArr.forEach(filename => {
     '..',
     '..',
     'text_finalized',
-    'jj',
-    'torrent_cleanedUp3',
+    'US_archive',
+    'US_archive_cleanedup2',
     filename
   );
 
@@ -59,7 +66,6 @@ fileNameArr.forEach(filename => {
       ) {
         sweetStartingPos = i - 2000;
         posFound = true;
-        console.log(sweetStartingPos);
       }
     }
 
