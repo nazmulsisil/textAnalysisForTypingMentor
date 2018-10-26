@@ -10,8 +10,12 @@ exports.updateJSON = function(syllable, filePath, syllablesObj) {
     });
 
     readStream.on('data', function(result) {
-      const myRegex = new RegExp(syllable, 'g');
-      const matchedDataArr = result.toString().match(myRegex);
+      var res = result.toString();
+      const matchedDataArr = [];
+      for (let i = 0, len = res.length; i < len; i++) {
+        if (res[i] === syllable) matchedDataArr.push(syllable);
+      }
+
       const numOfOccurrences = matchedDataArr ? matchedDataArr.length : 0;
 
       updateObjProp(syllablesObj, syllable, numOfOccurrences);

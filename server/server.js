@@ -33,7 +33,11 @@ app.get('/getWords', (req, res) => {
     ),
     howMany,
     dataOnCompletions => {
-      res.send(dataOnCompletions);
+      res.send(
+        dataOnCompletions.length > 0
+          ? dataOnCompletions
+          : 'No match found in the entire database!'
+      );
     }
   );
 });

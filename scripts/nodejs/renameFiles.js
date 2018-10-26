@@ -10,7 +10,7 @@ function rename(folderPath, currFileName, newFileName) {
   });
 }
 
-const folderPath = path.join(__dirname, '..', 'text_lab');
+const folderPath = path.join(__dirname, '..', '..', 'text_lab');
 let fileNamesArr = getFileNamesArr(folderPath);
 
 fileNamesArr.forEach(currFileName => {

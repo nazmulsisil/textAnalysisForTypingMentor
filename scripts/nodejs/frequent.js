@@ -7,6 +7,10 @@ const getMostFrequentSyllables = require('./mostFrequent')
   .getMostFrequentSyllables;
 const getFileNamesArr = require('./helper').getFileNamesArr;
 
+const one = {
+  fileName: 'noSyllables.json',
+  count: 1
+};
 const two = {
   fileName: 'diSyllables.json',
   count: 2
@@ -27,25 +31,34 @@ const test = {
 };
 
 // TODO: how many syllables?
-const numberOfSyllables = three;
+const numberOfSyllables = one;
 
 // empty-ing the json file at the starting of this file execution.
-const jsonPath = path.join(__dirname, '..', 'JSON', numberOfSyllables.fileName);
-emptyJSON(jsonPath);
-
-// TODO: generate all the possible syllables
-const syllables = getSyllables(
-  'abcdefghijklmnopqrstuvwxyz',
-  numberOfSyllables.count
+const jsonPath = path.join(
+  __dirname,
+  '..',
+  '..',
+  'JSON',
+  numberOfSyllables.fileName
 );
+emptyJSON(jsonPath);
+// prettier-ignore
+// TODO: generate all the possible syllables
+const syllables = getSyllables('`1234567890-=qwertyuiopasdfghjkl;\'\\zxcvbnm,./~!@#$%^&_QWERTYUIOP{}ASDFGHJKL:"|ZXCVBNM<>"[]*()+', numberOfSyllables.count);
 
 // Which file to read from
 // const filePath = 'downloadedText/GeraldineATaleOfConscience_djvu.txt';
 
 /////////////////////
-let fileNamesArr = getFileNamesArr(path.join(__dirname, '..', 'text_lab'));
+let fileNamesArr = getFileNamesArr(
+  path.join(__dirname, '..', '..', 'text_lab')
+);
+
+// shortening the array for testing purpose, taking 1 file
+fileNamesArr = fileNamesArr.slice(0, 1);
+
 let filePathsArr = fileNamesArr.map(fileName => {
-  return path.join(__dirname, '..', 'text_lab', fileName);
+  return path.join(__dirname, '..', '..', 'text_lab', fileName);
 });
 // filePathsArr = filePathsArr.slice(0, 2);
 
@@ -73,6 +86,7 @@ const syllablesObj = {};
 let counter = 0;
 
 (function recursion(syllable, filePath) {
+  // console.log(filePath);
   updateJSON(syllable, filePath, syllablesObj).then(updatedSyllablesObj => {
     counter++;
     if (syllablesArrToLoop[counter] !== undefined) {

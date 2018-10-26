@@ -21,7 +21,9 @@ exports.getMostFrequentSyllables = function(jsonPath, topHowMany, callBack) {
       return Object.values(b)[0] - Object.values(a)[0];
     });
 
-    callBack(mostFrequentSyllablesArr.slice(0, topHowMany));
+    if (callBack) {
+      callBack(mostFrequentSyllablesArr.slice(0, topHowMany));
+    }
 
     // console.log(mostFrequentSyllablesArr.slice(0, topHowMany));
   });

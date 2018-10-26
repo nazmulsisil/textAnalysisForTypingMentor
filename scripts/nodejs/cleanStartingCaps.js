@@ -4,14 +4,7 @@ const getFileNamesArr = require('./helper').getFileNamesArr;
 const capsRatio = require('./helper').capsRatio;
 
 let fileNameArr = getFileNamesArr(
-  path.join(
-    __dirname,
-    '..',
-    '..',
-    'text_finalized',
-    'US_archive',
-    'US_archive_cleanedup_required'
-  )
+  path.join(__dirname, '..', '..', 'text_finalized', 'jj', 'torrent')
 );
 
 fileNameArr.forEach(filename => {
@@ -20,8 +13,8 @@ fileNameArr.forEach(filename => {
     '..',
     '..',
     'text_finalized',
-    'US_archive',
-    'US_archive_cleanedup_required',
+    'jj',
+    'torrent',
     filename
   );
 
@@ -30,8 +23,8 @@ fileNameArr.forEach(filename => {
     '..',
     '..',
     'text_finalized',
-    'US_archive',
-    'US_archive_cleanedup2',
+    'jj',
+    'torrent_cleanedUp3',
     filename
   );
 
@@ -48,6 +41,7 @@ fileNameArr.forEach(filename => {
       // Next line is gotten from last line. Don't merge last and next line.
       .replace(/ \.\.\./g, '...')
       .replace(/([^A-Za-z0-9]\.\.\.)|(\.\.\. \.)/g, '...')
+      .replace(/,(?=[^ ])/g, ', ')
       .replace(/(\s\s+)|\t|(\r\n|\r|\n)/g, ' ')
       .replace(/‘|’/g, "'")
       .replace(/“|”/g, '"');

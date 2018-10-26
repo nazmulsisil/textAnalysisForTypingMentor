@@ -1,5 +1,6 @@
 exports.getSyllables = function(charsStr, numOfSyllables) {
   if (numOfSyllables === 0) return [];
+  if (numOfSyllables === 1) return charsStr.split('');
   if (numOfSyllables > 4) throw 'Greater than 2 syllables are not supported!';
 
   var charArr = charsStr.split('');
