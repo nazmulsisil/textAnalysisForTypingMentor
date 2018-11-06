@@ -8,8 +8,6 @@ const getMostFrequentSyllables = require('./mostFrequent')
   .getMostFrequentSyllables;
 const getFileNamesArr = require('./helper').getFileNamesArr;
 
-let start = new Date();
-
 const one = {
   fileName: 'noSyllables.json',
   count: 1
@@ -21,6 +19,10 @@ const two = {
 const three = {
   fileName: 'triSyllables.json',
   count: 3
+};
+const four = {
+  fileName: 'quadSyllables.json',
+  count: 4
 };
 
 const word = {
@@ -34,7 +36,7 @@ const test = {
 };
 
 // TODO: how many syllables?
-const numberOfSyllables = three;
+const numberOfSyllables = four;
 
 const syllablesJSONPath = path.join(
   __dirname,
@@ -54,21 +56,21 @@ const jsonPath = path.join(
   numberOfSyllables.fileName
 );
 emptyJSON(jsonPath);
+
+let start = new Date();
 // prettier-ignore
 // TODO: generate all the possible syllables
 const syllables = getSyllables(
-  // '`1234567890-=qwertyuiopasdfghjkl;\'\\zxcvbnm,./~!@#$%^&_QWERTYUIOP{}ASDFGHJKL:"|ZXCVBNM<>"[]*()+',
   'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ ',
   numberOfSyllables.count,
-  syllablesJSONPath,
+  // If you don't want to mathematically generate, rather want to read 
+  // from a certain file, then use following 3 arguments
   undefined,
-  10
+  undefined,
+  undefined
 );
-
+console.log(new Date() - start);
 console.log('syllablesArr length: ' + syllables.length);
-
-// Which file to read from
-// const filePath = 'downloadedText/GeraldineATaleOfConscience_djvu.txt';
 
 /////////////////////
 let fileNamesArr = getFileNamesArr(
@@ -105,28 +107,28 @@ syllables.forEach(syllable => {
 const syllablesObj = {};
 let counter = 0;
 
-(function recursion(syllable, filePath) {
-  // console.log(filePath);
-  updateJSON(syllable, filePath, syllablesObj).then(updatedSyllablesObj => {
-    counter++;
-    if (syllablesArrToLoop[counter] !== undefined) {
-      recursion(syllablesArrToLoop[counter], filePathsArrToLoop[counter]);
-    } else {
-      fs.writeFile(jsonPath, JSON.stringify(updatedSyllablesObj), function(
-        err
-      ) {
-        if (err) {
-          return console.log(err);
-        }
-        console.log('The file was saved!');
-        console.log((new Date() - start) / (60 * 60 * 1000) + ' hrs');
-        // console.log((new Date() - start) / (60 * 1000) + ' mins');
+// (function recursion(syllable, filePath) {
+//   // console.log(filePath);
+//   updateJSON(syllable, filePath, syllablesObj).then(updatedSyllablesObj => {
+//     counter++;
+//     if (syllablesArrToLoop[counter] !== undefined) {
+//       recursion(syllablesArrToLoop[counter], filePathsArrToLoop[counter]);
+//     } else {
+//       fs.writeFile(jsonPath, JSON.stringify(updatedSyllablesObj), function(
+//         err
+//       ) {
+//         if (err) {
+//           return console.log(err);
+//         }
+//         console.log('The file was saved!');
+//         console.log((new Date() - start) / (60 * 60 * 1000) + ' hrs');
+//         // console.log((new Date() - start) / (60 * 1000) + ' mins');
 
-        notifier.notify('Hi Sisil, triSyllables.json was saved!');
-      });
-    }
-  });
-})(syllablesArrToLoop[counter], filePathsArrToLoop[counter]);
+//         notifier.notify('Hi Sisil, triSyllables.json was saved!');
+//       });
+//     }
+//   });
+// })(syllablesArrToLoop[counter], filePathsArrToLoop[counter]);
 
 ///////// end of syllables ///////////////
 
