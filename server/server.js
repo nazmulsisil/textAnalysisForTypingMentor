@@ -32,6 +32,7 @@ app.get('/getWords', (req, res) => {
       `words_with_${wordLength - 1}_letters.json`
     ),
     howMany,
+    undefined,
     dataOnCompletions => {
       res.send(
         dataOnCompletions.length > 0

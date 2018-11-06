@@ -13,6 +13,7 @@ getMostFrequentSyllables(
     'words_with_0_letters.json'
   ),
   40,
+  undefined,
   data => {
     console.log(data);
   }

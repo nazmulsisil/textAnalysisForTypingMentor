@@ -2,7 +2,7 @@ const path = require('path');
 const getMostFrequentSyllables = require('../mostFrequent')
   .getMostFrequentSyllables;
 
-const syllables = getMostFrequentSyllables(
+getMostFrequentSyllables(
   path.join(
     __dirname,
     '..',
@@ -12,9 +12,11 @@ const syllables = getMostFrequentSyllables(
     // 'syllables',
     'triSyllables.json'
   ),
-  50,
-  undefined
+  undefined,
+  10,
+  data => {
+    // console.log(data);
+    console.log(data.map(el => Object.keys(el)[0]).length);
+    // console.log(data.slice(-100));
+  }
 );
-// .map(el => Object.keys(el)[0]);
-
-console.log(syllables);

@@ -1,11 +1,14 @@
 const fs = require('fs');
 const path = require('path');
+const notifier = require('node-notifier');
 const emptyJSON = require('./emptyJSON.js').emptyJSON;
 const getSyllables = require('./syllables.js').getSyllables;
 const updateJSON = require('./updateJSON.js').updateJSON;
 const getMostFrequentSyllables = require('./mostFrequent')
   .getMostFrequentSyllables;
 const getFileNamesArr = require('./helper').getFileNamesArr;
+
+let start = new Date();
 
 const one = {
   fileName: 'noSyllables.json',
@@ -31,7 +34,16 @@ const test = {
 };
 
 // TODO: how many syllables?
-const numberOfSyllables = one;
+const numberOfSyllables = three;
+
+const syllablesJSONPath = path.join(
+  __dirname,
+  '..',
+  '..',
+  'JSON',
+  'syllables',
+  'triSyllables.json'
+);
 
 // empty-ing the json file at the starting of this file execution.
 const jsonPath = path.join(
@@ -44,7 +56,16 @@ const jsonPath = path.join(
 emptyJSON(jsonPath);
 // prettier-ignore
 // TODO: generate all the possible syllables
-const syllables = getSyllables('`1234567890-=qwertyuiopasdfghjkl;\'\\zxcvbnm,./~!@#$%^&_QWERTYUIOP{}ASDFGHJKL:"|ZXCVBNM<>"[]*()+', numberOfSyllables.count);
+const syllables = getSyllables(
+  // '`1234567890-=qwertyuiopasdfghjkl;\'\\zxcvbnm,./~!@#$%^&_QWERTYUIOP{}ASDFGHJKL:"|ZXCVBNM<>"[]*()+',
+  'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ ',
+  numberOfSyllables.count,
+  syllablesJSONPath,
+  undefined,
+  10
+);
+
+console.log('syllablesArr length: ' + syllables.length);
 
 // Which file to read from
 // const filePath = 'downloadedText/GeraldineATaleOfConscience_djvu.txt';
@@ -54,13 +75,12 @@ let fileNamesArr = getFileNamesArr(
   path.join(__dirname, '..', '..', 'text_lab')
 );
 
-// shortening the array for testing purpose, taking 1 file
-fileNamesArr = fileNamesArr.slice(0, 1);
+// TODO: shortening the array for testing purpose, taking 1 file
+// fileNamesArr = fileNamesArr.slice(0, 1);
 
 let filePathsArr = fileNamesArr.map(fileName => {
   return path.join(__dirname, '..', '..', 'text_lab', fileName);
 });
-// filePathsArr = filePathsArr.slice(0, 2);
 
 // creating syllables arr to loop
 const syllablesArrToLoop = [];
@@ -99,7 +119,10 @@ let counter = 0;
           return console.log(err);
         }
         console.log('The file was saved!');
-        getMostFrequentSyllables(jsonPath, 10);
+        console.log((new Date() - start) / (60 * 60 * 1000) + ' hrs');
+        // console.log((new Date() - start) / (60 * 1000) + ' mins');
+
+        notifier.notify('Hi Sisil, triSyllables.json was saved!');
       });
     }
   });

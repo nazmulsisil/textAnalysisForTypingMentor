@@ -1,4 +1,21 @@
-exports.getSyllables = function(charsStr, numOfSyllables) {
+const getMostFrequentSyllables = require('./mostFrequent')
+  .getMostFrequentSyllables;
+
+exports.getSyllables = function(
+  charsStr,
+  numOfSyllables,
+  syllablesJSONPath,
+  topHowMany,
+  minOccurred
+) {
+  if (syllablesJSONPath) {
+    return getMostFrequentSyllables(
+      syllablesJSONPath,
+      topHowMany,
+      minOccurred
+    ).map(el => Object.keys(el)[0]);
+  }
+
   if (numOfSyllables === 0) return [];
   if (numOfSyllables === 1) return charsStr.split('');
   if (numOfSyllables > 4) throw 'Greater than 2 syllables are not supported!';

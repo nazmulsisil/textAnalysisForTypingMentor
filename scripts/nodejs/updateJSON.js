@@ -1,21 +1,20 @@
 const fs = require('fs');
 const updateObjProp = require('./helper').updateObjProp;
+const getTextLengthOfFile = require('./getTextLengthOfFile')
+  .getTextLengthOfFile;
 
 // for syllables
 exports.updateJSON = function(syllable, filePath, syllablesObj) {
   return new Promise((sFn, fFn) => {
+    const lengthOfFile = getTextLengthOfFile(filePath);
     const readStream = fs.createReadStream(filePath, {
       encoding: 'utf8',
-      highWaterMark: 1000
+      highWaterMark: lengthOfFile
     });
 
     readStream.on('data', function(result) {
-      var res = result.toString();
-      const matchedDataArr = [];
-      for (let i = 0, len = res.length; i < len; i++) {
-        if (res[i] === syllable) matchedDataArr.push(syllable);
-      }
-
+      const myRegex = new RegExp(syllable, 'g');
+      const matchedDataArr = result.toString().match(myRegex);
       const numOfOccurrences = matchedDataArr ? matchedDataArr.length : 0;
 
       updateObjProp(syllablesObj, syllable, numOfOccurrences);

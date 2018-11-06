@@ -12,17 +12,17 @@ getWordsContainSyllable(
     'words',
     'words_with_0_letters.json'
   ),
-  40,
+  100,
   data => {
     console.log(
       data
-        .map(el => {
-          return Object.keys(el)[0];
-        })
-        .join('|')
+      // .map(el => {
+      //   return Object.keys(el)[0];
+      // })
+      // .join('|')
     );
   },
-  'tha',
-  true,
+  'uiopjklnm,yh',
+  false,
   0.5
 );
