@@ -2,7 +2,7 @@ const path = require('path');
 const getMostFrequentSyllables = require('../mostFrequent')
   .getMostFrequentSyllables;
 
-getMostFrequentSyllables(
+const foundWords = getMostFrequentSyllables(
   path.join(
     __dirname,
     '..',
@@ -13,8 +13,7 @@ getMostFrequentSyllables(
     'words_with_0_letters.json'
   ),
   40,
-  undefined,
-  data => {
-    console.log(data);
-  }
+  undefined
 );
+
+console.log(foundWords.length);

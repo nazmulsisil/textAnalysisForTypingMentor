@@ -9,12 +9,11 @@ const syllables = getMostFrequentSyllables(
     '..',
     '..',
     'JSON',
-    // 'syllables',
-    'triSyllables.json'
+    'selected',
+    'quadSyllables.json'
   ),
-  50,
+  undefined,
   undefined
 );
-// .map(el => Object.keys(el)[0]);
 
-console.log(syllables);
+console.log(syllables.length);

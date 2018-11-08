@@ -1,0 +1,1 @@
+Here you will find syllables that were found on whole database we had on 07-Nov-2018.
