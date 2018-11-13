@@ -4,27 +4,46 @@ const fs = require('fs');
 const getMostFrequentSyllables = require('../mostFrequent')
   .getMostFrequentSyllables;
 
-const sourceFileName = 'quadSyllables.json';
+const sourceFileName = 'diSyllables.json';
 
 // Getting all syllables from JSON
 const syllables = getMostFrequentSyllables(
-  path.join(__dirname, '..', '..', '..', 'JSON', 'selected', sourceFileName),
+  path.join(
+    __dirname,
+    '..',
+    '..',
+    '..',
+    'JSON',
+    'syllables',
+    'selected',
+    sourceFileName
+  ),
   undefined,
   undefined
 );
 
 // Getting average occurrences of first 10
+const avgOfHowMany = 10;
 const first10Avg =
   syllables
-    .slice(0, 10)
-    .reduce((prev, curr) => prev + Object.values(curr)[0], 0) / 10;
+    .slice(0, avgOfHowMany)
+    .reduce((prev, curr) => prev + Object.values(curr)[0], 0) / avgOfHowMany;
 
 // Setting min occurrence
 const minMark = first10Avg * 0.2;
 
 // Getting min occurred syllables
 const minMarkedSyllables = getMostFrequentSyllables(
-  path.join(__dirname, '..', '..', '..', 'JSON', 'selected', sourceFileName),
+  path.join(
+    __dirname,
+    '..',
+    '..',
+    '..',
+    'JSON',
+    'syllables',
+    'selected',
+    sourceFileName
+  ),
   undefined,
   minMark
 );
@@ -69,9 +88,11 @@ const jsonPath = path.join(
   '..',
   '..',
   'JSON',
+  'syllables',
   'top',
   sourceFileName
 );
+
 fs.writeFile(jsonPath, JSON.stringify(finalJSONArr), function(err) {
   if (err) {
     return console.log(err);

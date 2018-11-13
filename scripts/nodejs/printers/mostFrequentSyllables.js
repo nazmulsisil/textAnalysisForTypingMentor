@@ -1,6 +1,7 @@
 const path = require('path');
 const getMostFrequentSyllables = require('../mostFrequent')
   .getMostFrequentSyllables;
+const start = new Date();
 
 const syllables = getMostFrequentSyllables(
   path.join(
@@ -9,11 +10,13 @@ const syllables = getMostFrequentSyllables(
     '..',
     '..',
     'JSON',
-    'selected',
-    'quadSyllables.json'
+    'syllables',
+    'top',
+    'noSyllables.json'
   ),
   undefined,
   undefined
 );
 
-console.log(syllables.length);
+console.log('syllables length: ' + syllables.length);
+console.log('time taken total: ' + (new Date() - start));

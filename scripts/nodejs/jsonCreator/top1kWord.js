@@ -1,12 +1,11 @@
 const fs = require('fs');
 const notifier = require('node-notifier');
 const path = require('path');
-const getMostFrequentSyllables = require('../mostFrequent')
-  .getMostFrequentSyllables;
+const getMostFrequentWords = require('../mostFrequent').getMostFrequentWords;
 
 const sourceFileName = 'words.json';
 
-let wordRaw = getMostFrequentSyllables(
+let wordRaw = getMostFrequentWords(
   path.join(
     __dirname,
     '..',
@@ -17,42 +16,24 @@ let wordRaw = getMostFrequentSyllables(
     'purified',
     sourceFileName
   ),
-  undefined,
+  1500,
   undefined
 );
 
 let words1100 = [];
 
-for (const identifier in wordRaw[0]['0']) {
-  if (wordRaw[0]['0'].hasOwnProperty(identifier)) {
-    const count = wordRaw[0]['0'][identifier];
-    words1100.push({ [identifier]: count });
-  }
-}
+wordRaw.forEach((wordObj, i) => {
+  words1100.push({ [Object.keys(wordObj)[0]]: Object.values(wordObj)[0] });
+});
 
-console.log('words1100: ' + words1100.length);
-console.log(words1100);
-
-// for example purpose I reassigned the following Array
-// words1100 = [
-//   { '$help.': 1 },
-//   { 'help.': 1 },
-//   { help: 1 },
-//   { 'he00()"lp': 1 },
-//   { man: 40 }
-// ];
+console.log('words1100 length: ' + words1100.length);
 
 const trimmedWords = {};
 
 // Remove strange characters from word
-words1100.forEach(obj => {
+words1100.forEach((obj, i) => {
+  // if (i < 5) console.log(obj);
   const keyName = Object.keys(obj)[0];
-  // const newKeyName = Array.from(keyName)
-  //   .filter(char => {
-  //     return /[a-zA-Z]/g.test(char);
-  //   })
-  //   .join('');
-
   const newKeyName = keyName;
 
   trimmedWords[newKeyName] = trimmedWords[newKeyName]
@@ -70,7 +51,9 @@ for (const wordIdentifier in trimmedWords) {
     if (
       wordIdentifier.length > 1 ||
       wordIdentifier === 'i' ||
-      wordIdentifier === 'I'
+      wordIdentifier === 'I' ||
+      wordIdentifier === 'a' ||
+      wordIdentifier === 'A'
     ) {
       final1100.push({
         [wordIdentifier]: count
@@ -82,6 +65,8 @@ for (const wordIdentifier in trimmedWords) {
 final1100.sort((a, b) => {
   return Object.values(b)[0] - Object.values(a)[0];
 });
+
+// console.log(final1100.slice(0, 10));
 
 const wordListBreakdowns = [
   50,
@@ -101,14 +86,12 @@ const wordListBreakdowns = [
   1000
 ];
 
-const finalJSONArr = [...Array(wordListBreakdowns.length)].map(() => ({}));
+const finalJSONArr = [];
 
-wordListBreakdowns.map((count, i) => {
+wordListBreakdowns.forEach((count, i) => {
   const sliced = final1100.slice(0, count);
 
-  sliced.forEach(wordObj => {
-    finalJSONArr[i][Object.keys(wordObj)[0]] = Object.values(wordObj)[0];
-  });
+  finalJSONArr.push(sliced);
 });
 
 // console.log(finalJSONArr);
@@ -131,3 +114,5 @@ fs.writeFile(jsonPath, JSON.stringify(finalJSONArr), function(err) {
 
   notifier.notify(`${sourceFileName} was saved!`);
 });
+
+console.log('final1100 length: ' + final1100.length);

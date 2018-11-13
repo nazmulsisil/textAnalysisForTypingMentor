@@ -27,7 +27,9 @@ exports.getWordsContainSyllable = function(
           const numOfTimesOccurred = jsonObj[syl];
           if (
             numOfTimesOccurred > 500 &&
-            (syl.length > 1 || syl.toLowerCase() === 'i')
+            (syl.length > 1 ||
+              syl.toLowerCase() === 'i' ||
+              syl.toLowerCase() === 'a')
           ) {
             mostFrequentSyllablesArr.push({
               [syl]: numOfTimesOccurred,
