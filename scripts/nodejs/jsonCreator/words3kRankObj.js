@@ -21,10 +21,9 @@ function getIndicesOf(searchStr, str, caseSensitive) {
 }
 
 class TextObjForRanking {
-  constructor(text, keysArr, serialNum) {
+  constructor(text, keysArr) {
     this._text = text;
     this._score = 0;
-    this._serialNum = serialNum;
 
     keysArr.forEach(key => {
       const matchedArr = getIndicesOf(key, text, true);
@@ -33,17 +32,6 @@ class TextObjForRanking {
         this[key] = (matchedArr.length * key.length) / text.length;
       }
     });
-
-    this._updateScore = `function(searchKeysObjArr, maxAllowedSerialNumOfWord) {
-      if (this._serialNum <= maxAllowedSerialNumOfWord) {
-        searchKeysObjArr.forEach(keyObj => {
-          const key = Object.keys(keyObj)[0];
-          const weight = Object.values(keyObj)[0];
-          const keyScore = this[key];
-          this._score += (keyScore ? keyScore : 0) * weight;
-        });
-      }
-    }`;
   }
 }
 
@@ -65,14 +53,13 @@ const keysReadFile = path.join(
 let keysArr = JSON.parse(fs.readFileSync(keysReadFile, 'utf8'));
 let wordsArr = JSON.parse(fs.readFileSync(wordsReadFile, 'utf8'));
 
-let textRankArr = wordsArr.map((text, i) => {
-  return new TextObjForRanking(text, keysArr, i);
-});
-
-// EXPIRE: 7days
-// textRankArr.sort((a, b) => {
-//   return b.totalScore - a.totalScore;
-// });
+let textRankArr = wordsArr
+  .map((text, i) => {
+    if (text.length > 0) {
+      return new TextObjForRanking(text, keysArr, i);
+    }
+  })
+  .filter(Boolean);
 
 fs.writeFile(wordsRankWriteFile, JSON.stringify(textRankArr), function(err) {
   if (err) throw err;

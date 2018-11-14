@@ -9,21 +9,24 @@ const readPath = path.join(
 
 let rankObjArr = JSON.parse(fs.readFileSync(readPath, 'utf8'));
 
-const searchKeys = [{ Q: 10 }, { W: 10 }, { E: 10 }].map(
-  (weightObj, i, currArr) => {
+const searchKeys = 'was'
+  .split(',')
+  .map(char => {
+    return { [char]: 10 };
+  })
+  .map((weightObj, i, currArr) => {
     const totalWeightVal = currArr.reduce((prev, curr) => {
       return prev + Object.values(curr)[0];
     }, 0);
     return {
       [Object.keys(weightObj)[0]]: Object.values(weightObj)[0] / totalWeightVal
     };
-  }
-);
+  });
 
 rankObjArr.forEach(rankObj => {
-  rankObj._updateScore = eval('(' + rankObj._updateScore + ')');
+  rankObj.updateScore = eval('(' + rankObj.updateScore + ')');
 
-  rankObj._updateScore(searchKeys, 99999999);
+  updateScore.call(rankObj, searchKeys);
 });
 
 const newArr = rankObjArr
@@ -41,7 +44,18 @@ console.log(
   newArr
     .slice(0, 20)
     .map(obj => {
-      return obj._text;
+      const upperCaseKeysArr = ''.split(',').map(l => l.toLowerCase());
+      const word = obj._text;
+      const upperCaseIsNeeded = upperCaseKeysArr.includes(
+        word[0].toLowerCase()
+      );
+
+      if (upperCaseIsNeeded) {
+        return word.charAt(0).toUpperCase() + word.slice(1);
+      } else {
+        return word;
+      }
+
       // return obj['text'] + ': ' + obj['score'].toPrecision(3);
     })
     .join('|')
@@ -49,3 +63,27 @@ console.log(
 
 console.log(new Date() - start);
 console.log('length: ' + newArr.length);
+
+function updateScore(searchKeysObjArr, maxAllowedSerialNumOfWord) {
+  if (this._serialNum <= maxAllowedSerialNumOfWord) {
+    searchKeysObjArr.forEach(keyObj => {
+      const key = Object.keys(keyObj)[0];
+      const keyIsUpperCase = key === key.toUpperCase();
+      const weight = Object.values(keyObj)[0];
+      let keyScore = this[key];
+
+      if (keyScore) {
+        this._score += keyScore * weight;
+      } else if (keyIsUpperCase) {
+        const firstCharMatchedCaseInsensitively =
+          key.toLowerCase() === this._text[0].toLowerCase();
+
+        if (firstCharMatchedCaseInsensitively) {
+          // Following 1 is taken hard coded cus only first one letter is only eligible for being capitalized
+          keyScore = 1 / this._text.length;
+          this._score += keyScore * weight;
+        }
+      }
+    });
+  }
+}
