@@ -40,6 +40,7 @@ const writePath = path.join(
   'syllables_&_words',
   'consolidated.json'
 );
+
 fs.writeFile(writePath, JSON.stringify(consolidatedObj), function(err) {
   if (err) {
     return console.log(err);

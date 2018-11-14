@@ -4,12 +4,12 @@ const start = new Date();
 
 const readPath = path.join(
   __dirname,
-  './../../../JSON/rank/words3kRankObj.json'
+  './../../../JSON/rank/paragraphsRankObj.json'
 );
 
 let rankObjArr = JSON.parse(fs.readFileSync(readPath, 'utf8'));
 
-const searchKeys = 'a,b,o,u,t,h,w'
+const searchKeys = 'brain'
   .split(',')
   .map(char => {
     return { [char]: 10 };
@@ -24,8 +24,6 @@ const searchKeys = 'a,b,o,u,t,h,w'
   });
 
 rankObjArr.forEach(rankObj => {
-  rankObj.updateScore = eval('(' + rankObj.updateScore + ')');
-
   updateScore.call(rankObj, searchKeys);
 });
 
@@ -42,19 +40,9 @@ const newArr = rankObjArr
 
 console.log(
   newArr
-    .slice(0, 20)
+    .slice(0, 1)
     .map(obj => {
-      const upperCaseKeysArr = ''.split(',').map(l => l.toLowerCase());
-      const word = obj._text;
-      const upperCaseIsNeeded = upperCaseKeysArr.includes(
-        word[0].toLowerCase()
-      );
-
-      if (upperCaseIsNeeded) {
-        return word.charAt(0).toUpperCase() + word.slice(1);
-      } else {
-        return word;
-      }
+      return obj['_text'];
 
       // return obj['text'] + ': ' + obj['score'].toPrecision(3);
     })
