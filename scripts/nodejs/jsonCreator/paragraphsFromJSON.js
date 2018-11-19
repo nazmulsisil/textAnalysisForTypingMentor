@@ -1,15 +1,15 @@
 const fs = require('fs');
 const path = require('path');
-const textFilter = require('./../helper/textFilter').textFilter;
+const textFilter = require('../helper/textFilter').textFilter;
 
 const readPath = path.join(
   __dirname,
-  './../../../text_consolidated/paragraphs.txt'
+  './../../../JSON/paragraphs/paragraphObjectsArr.json'
 );
 
 const writePath = path.join(
   __dirname,
-  './../../../JSON/paragraph/paragraphsArr.json'
+  './../../../JSON/paragraphs/paragraphsArr.json'
 );
 
 fs.readFile(readPath, 'utf8', function(err, data) {
@@ -17,10 +17,12 @@ fs.readFile(readPath, 'utf8', function(err, data) {
   if (err) throw err;
   const paragraphsArr = [];
 
-  data.split('\r\n').forEach(currPara => {
-    const txt = textFilter(currPara);
+  const arrOfParagraphsObj = JSON.parse(data);
+
+  arrOfParagraphsObj.forEach(paraObj => {
+    const txt = textFilter(paraObj.text);
     if (txt) {
-      paragraphsArr.push(txt);
+      paragraphsArr.push(txt.trim());
     }
   });
 

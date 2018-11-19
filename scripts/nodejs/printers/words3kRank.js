@@ -9,7 +9,7 @@ const readPath = path.join(
 
 let rankObjArr = JSON.parse(fs.readFileSync(readPath, 'utf8'));
 
-const searchKeys = 'a,b,o,u,t,h,w'
+const searchKeys = 'r,w,q,y,b,n,c,x,z'
   .split(',')
   .map(char => {
     return { [char]: 10 };
@@ -42,7 +42,7 @@ const newArr = rankObjArr
 
 console.log(
   newArr
-    .slice(0, 20)
+    .slice(0, 100)
     .map(obj => {
       const upperCaseKeysArr = ''.split(',').map(l => l.toLowerCase());
       const word = obj._text;
@@ -56,6 +56,7 @@ console.log(
         return word;
       }
 
+      // return obj['_score'].toPrecision(2);
       // return obj['text'] + ': ' + obj['score'].toPrecision(3);
     })
     .join('|')

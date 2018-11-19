@@ -42,7 +42,7 @@ const paragraphsRankWriteFile = path.join(
 
 const wordsReadFile = path.join(
   __dirname,
-  './../../../JSON/paragraph/paragraphsArr.json'
+  './../../../JSON/paragraphs/paragraphsArr.json'
 );
 
 const keysReadFile = path.join(

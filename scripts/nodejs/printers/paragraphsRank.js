@@ -9,7 +9,7 @@ const readPath = path.join(
 
 let rankObjArr = JSON.parse(fs.readFileSync(readPath, 'utf8'));
 
-const searchKeys = 'brain'
+const searchKeys = ' the'
   .split(',')
   .map(char => {
     return { [char]: 10 };

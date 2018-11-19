@@ -3,7 +3,7 @@ const notifier = require('node-notifier');
 const path = require('path');
 const getFileNamesArr = require('../helper').getFileNamesArr;
 
-const consolidatedArr = [];
+const consolidatedObj = {};
 
 // Create a list of json paths of the files which will be concatenated
 let fileNamesArr = getFileNamesArr(
@@ -13,7 +13,7 @@ let fileNamesArr = getFileNamesArr(
 fileNamesArr.forEach(fileName => {
   const identifier = fileName.slice(0, fileName.length - 5);
 
-  const readFile = path.join(
+  const filePath = path.join(
     __dirname,
     '..',
     '..',
@@ -23,27 +23,18 @@ fileNamesArr.forEach(fileName => {
     fileName
   );
 
-  let jsonArr = fs.readFileSync(readFile, 'utf8');
-  jsonArr = JSON.parse(jsonArr);
-
-  jsonArr.forEach((jsonObj, i, currArr) => {
+  let jsonArr = fs.readFileSync(filePath, 'utf8');
+  jsonArr = JSON.parse(jsonArr).map(obj => {
     if (identifier === 'words100') {
-      if (i === currArr.length - 1) {
-        for (const key in jsonObj) {
-          if (jsonObj.hasOwnProperty(key)) {
-            const obj = jsonObj[key];
-            consolidatedArr.push(Object.keys(obj)[0]);
-          }
-        }
-      }
+      return obj.map(obj => {
+        return Object.keys(obj)[0];
+      });
     } else {
-      for (const key in jsonObj) {
-        if (jsonObj.hasOwnProperty(key)) {
-          consolidatedArr.push(key);
-        }
-      }
+      return Object.keys(obj);
     }
   });
+
+  consolidatedObj[identifier] = jsonArr;
 });
 
 // In which file to save
@@ -55,14 +46,13 @@ const writePath = path.join(
   'JSON',
   'consolidatedJSON',
   'syllables_&_words',
-  'consolidatedArr.json'
+  'consolidatedSectionsArr.json'
 );
-fs.writeFile(writePath, JSON.stringify(consolidatedArr), function(err) {
+
+fs.writeFile(writePath, JSON.stringify(consolidatedObj), function(err) {
   if (err) {
     return console.log(err);
   }
 
-  notifier.notify(`consolidatedArr was saved!`);
+  notifier.notify('consolidatedJSON was saved!');
 });
-
-console.log('consolidatedArr length: ' + consolidatedArr.length);

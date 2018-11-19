@@ -48,6 +48,7 @@ const minMarkedSyllables = getMostFrequentSyllables(
   undefined
 );
 
+console.log(minMarkedSyllables);
 console.log('selected triSyllables: ' + syllables.length);
 console.log('min marked triSyllables: ' + minMarkedSyllables.length);
 
@@ -64,6 +65,7 @@ const allPartsOfSyllables = [
 const finalJSONArr = [{}, {}, {}];
 
 allPartsOfSyllables.forEach((part, i) => {
+  console.log(part);
   part.forEach(syllableObj => {
     finalJSONArr[i][Object.keys(syllableObj)[0]] = Object.values(
       syllableObj
