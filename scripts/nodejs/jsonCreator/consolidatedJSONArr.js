@@ -28,12 +28,10 @@ fileNamesArr.forEach(fileName => {
 
   jsonArr.forEach((jsonObj, i, currArr) => {
     if (identifier === 'words100') {
-      if (i === currArr.length - 1) {
-        for (const key in jsonObj) {
-          if (jsonObj.hasOwnProperty(key)) {
-            const obj = jsonObj[key];
-            consolidatedArr.push(Object.keys(obj)[0]);
-          }
+      for (const key in jsonObj) {
+        if (jsonObj.hasOwnProperty(key)) {
+          const obj = jsonObj[key];
+          consolidatedArr.push(Object.keys(obj)[0]);
         }
       }
     } else {
