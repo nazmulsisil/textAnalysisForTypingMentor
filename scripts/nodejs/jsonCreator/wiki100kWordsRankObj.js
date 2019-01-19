@@ -35,16 +35,16 @@ class TextObjForRanking {
       }
     });
 
-    this._updateScore = `function(searchKeysObjArr, maxAllowedSerialNumOfWord) {
-      if (this._serialNum <= maxAllowedSerialNumOfWord) {
-        searchKeysObjArr.forEach(keyObj => {
-          const key = Object.keys(keyObj)[0];
-          const weight = Object.values(keyObj)[0];
-          const keyScore = this[key];
-          this._score += (keyScore ? keyScore : 0) * weight;
-        });
-      }
-    }`;
+    // this._updateScore = `function(searchKeysObjArr, maxAllowedSerialNumOfWord) {
+    //   if (this._serialNum <= maxAllowedSerialNumOfWord) {
+    //     searchKeysObjArr.forEach(keyObj => {
+    //       const key = Object.keys(keyObj)[0];
+    //       const weight = Object.values(keyObj)[0];
+    //       const keyScore = this[key];
+    //       this._score += (keyScore ? keyScore : 0) * weight;
+    //     });
+    //   }
+    // }`;
 
     // this.updateTotalScore();
   }
@@ -91,5 +91,5 @@ let textRankArr = wordsArr.map((text, i) => {
 
 fs.writeFile(wordsRankWriteFile, JSON.stringify(textRankArr), function(err) {
   if (err) throw err;
-  console.log('complete');
+  console.log('complete: ' + textRankArr.length + ' items.');
 });

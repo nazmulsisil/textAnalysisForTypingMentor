@@ -62,5 +62,5 @@ textRankArr = textRankArr.filter(Boolean);
 
 fs.writeFile(wordsRankWriteFile, JSON.stringify(textRankArr), function(err) {
   if (err) throw err;
-  console.log('complete');
+  console.log('complete: ' + textRankArr.length + ' items.');
 });

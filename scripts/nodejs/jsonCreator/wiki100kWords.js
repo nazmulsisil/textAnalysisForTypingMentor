@@ -16,9 +16,10 @@ const dict = fs.readFileSync(
   path.join(__dirname, './../../../JSON/all_words/dictionary.json'),
   'utf8'
 );
-const dictionary = JSON.parse(dict).map(word => {
-  return word.toLowerCase();
-});
+const dictionary = JSON.parse(dict);
+// .map(word => {
+//   return word.toLowerCase();
+// });
 
 console.log('1. dictionary length: ' + dictionary.length);
 
@@ -35,9 +36,9 @@ fs.readFile(readPath, 'utf8', function(err, data) {
       word.toLowerCase() === 'a'
     ) {
       if (!wordArr.includes(word)) {
-        if (word === 'the' && !dictionary.includes(word)) {
-          console.log('the - excluded');
-        }
+        // if (word === 'the' && !dictionary.includes(word)) {
+        //   console.log('the - excluded');
+        // }
         if (dictionary.includes(word)) {
           wordArr.push(currWord);
         }

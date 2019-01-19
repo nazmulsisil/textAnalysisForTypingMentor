@@ -29,18 +29,20 @@ class TextObjForRanking {
       const matchedArr = getIndicesOf(key, text, true);
 
       if (matchedArr && matchedArr.length > 0) {
-        this[key] = (matchedArr.length * key.length) / text.length;
+        this[key] = parseFloat(
+          ((matchedArr.length * key.length) / text.length).toFixed(3)
+        );
       }
     });
   }
 }
 
-const paragraphsRankWriteFile = path.join(
+const sentencesRankWriteFile = path.join(
   __dirname,
   './../../../JSON/rank/sentencesRankObj.json'
 );
 
-const wordsReadFile = path.join(
+const sentencesReadFile = path.join(
   __dirname,
   './../../../JSON/sentences/sentencesArr.json'
 );
@@ -51,9 +53,9 @@ const keysReadFile = path.join(
 );
 
 let keysArr = JSON.parse(fs.readFileSync(keysReadFile, 'utf8'));
-let paragraphsArr = JSON.parse(fs.readFileSync(wordsReadFile, 'utf8'));
+let sentencesArr = JSON.parse(fs.readFileSync(sentencesReadFile, 'utf8'));
 
-let textRankArr = paragraphsArr
+let textRankArr = sentencesArr
   .map((text, i) => {
     if (text.length > 0) {
       return new TextObjForRanking(text, keysArr, i);
@@ -61,7 +63,7 @@ let textRankArr = paragraphsArr
   })
   .filter(Boolean);
 
-fs.writeFile(paragraphsRankWriteFile, JSON.stringify(textRankArr), function(
+fs.writeFile(sentencesRankWriteFile, JSON.stringify(textRankArr), function(
   err
 ) {
   if (err) throw err;

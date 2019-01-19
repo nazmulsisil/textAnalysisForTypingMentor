@@ -29,7 +29,9 @@ class TextObjForRanking {
       const matchedArr = getIndicesOf(key, text, true);
 
       if (matchedArr && matchedArr.length > 0) {
-        this[key] = (matchedArr.length * key.length) / text.length;
+        this[key] = parseFloat(
+          ((matchedArr.length * key.length) / text.length).toFixed(3)
+        );
       }
     });
   }

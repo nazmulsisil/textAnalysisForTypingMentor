@@ -24,11 +24,15 @@ fs.readFile(readPath, 'utf8', function(err, data) {
   arrOfParagraphsObj.forEach(paraObj => {
     const txt = textFilter(paraObj.text).trim();
     if (txt) {
-      txt.split(/(?<=[.!?;])\s+(?=[A-Za-z0-9])/g).forEach(sentence => {
-        if (sentence.trim().length > 20) {
-          sentencesArr.push(capitalizeFirstLetter(sentence.trim()));
-        }
-      });
+      // following line worked but could not exclude Mr. Dr. etc
+      // txt.split(/(?<=[.!?;])\s+(?=[A-Za-z0-9])/g).forEach(sentence => {
+      txt
+        .split(/(?<!Mr.|Dr.|Jr.|Asst.)(?<=[.!?;])\s+(?=[A-Za-z0-9])/g)
+        .forEach(sentence => {
+          if (sentence.trim().length > 20) {
+            sentencesArr.push(capitalizeFirstLetter(sentence.trim()));
+          }
+        });
     }
   });
 

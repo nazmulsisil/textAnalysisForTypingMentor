@@ -20,7 +20,7 @@ fs.readFile(readPath, 'utf8', function(err, data) {
   const arrOfParagraphsObj = JSON.parse(data);
 
   arrOfParagraphsObj.forEach(paraObj => {
-    const txt = textFilter(paraObj.text);
+    const txt = textFilter(paraObj._text);
     if (txt) {
       paragraphsArr.push(txt.trim());
     }

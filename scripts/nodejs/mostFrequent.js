@@ -1,5 +1,6 @@
 const fs = require('fs');
 
+// sync
 exports.getMostFrequentSyllables = function(
   jsonPath,
   topHowMany,

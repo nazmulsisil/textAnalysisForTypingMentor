@@ -10,5 +10,6 @@ exports.textFilter = function(txt) {
       .replace(/\.(?=[A-Z][^.])/g, '. ')
       .replace(/‘|’/g, "'")
       .replace(/“|”/g, '"')
+      .replace(/[^A-Za-z0-9~!@#$%\^&*()_+\-={}[\]:"|;'\\<>?,./` ]/g, ' ')
   );
 };
